@@ -41,10 +41,9 @@ export const Storage = {
   setLocalItem: (key, val) => {
     localStorage.setItem(key, JSON.stringify(val));
   },
-
   getLocalItem: key => {
     let value = localStorage.getItem(key);
-    if (value) {
+    if (value !== 'undefined') {
       try {
         value = JSON.parse(value);
       } catch (error) {

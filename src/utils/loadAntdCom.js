@@ -17,6 +17,7 @@ import {
   Popover,
   Dropdown,
   Modal,
+  Switch
 } from 'ant-design-vue';
 
 import {
@@ -51,6 +52,7 @@ export default function lazyLoadAntComponent(app) {
     Popover,
     Dropdown,
     Modal,
+    Switch
   ].forEach(com => app.use(com));
 
   // 加载自定义组件和图标

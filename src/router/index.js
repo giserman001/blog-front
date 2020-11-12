@@ -1,137 +1,54 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Layout from '@/layout'
+import { createRouter, createWebHashHistory } from 'vue-router';
 
-export const constantRoutes = [
-  {
-    path: '/login',
-    component: () => import('@/views/login'),
-    hidden: true,
-  },
-  {
-    path: '/403',
-    name: '403',
-    component: () => import('@/views/403'),
-    hidden: true,
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import('@/views/404'),
-    hidden: true,
-  },
-]
-export const asyncRoutes = [
+export const routes = [
   {
     path: '/',
-    component: Layout,
-    redirect: '/index',
-    meta: {
-      title: '首页',
-      icon: 'home-4-line',
-      affix: true,
-    },
+    name: '主菜单',
+    icon: 'UserOutlined',
+    component: () => import('@/components/Layout'),
     children: [
       {
-        path: 'index',
-        name: 'Index',
-        component: () => import('@/views/index'),
-        meta: {
-          title: '首页',
-          icon: 'home-4-line',
-          affix: true,
-        },
+        path: '/',
+        name: '主页',
+        component: () => import('@/views/home/index'),
+      },
+      {
+        path: '/list',
+        name: '表单',
+        component: () => import('@/views/home/list'),
       },
     ],
   },
   {
-    path: '/vab',
-    component: Layout,
-    redirect: '/vab/table',
-    alwaysShow: true,
-    meta: {
-      title: '组件',
-      icon: 'apps-line',
-    },
+    path: '/order',
+    name: '订单模块',
+    icon: 'UserOutlined',
+    component: () => import('@/components/Layout'),
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/vab/table'),
-        meta: {
-          title: '表格',
-          icon: 'table-2',
-        },
+        path: '/order/mine',
+        name: '我的订单',
+        component: () => import('@/views/order/myOrder'),
       },
       {
-        path: 'icon',
-        name: 'Icon',
-        component: () => import('@/views/vab/icon'),
-        meta: {
-          title: '图标',
-          icon: 'remixicon-line',
-        },
+        path: '/order/list',
+        name: '表格',
+        component: () => import('@/views/order/orderList'),
       },
     ],
   },
   {
-    path: '/test',
-    component: Layout,
-    redirect: '/test/test',
-    meta: {
-      title: '动态路由测试',
-      icon: 'test-tube-line',
-    },
-    children: [
-      {
-        path: 'test',
-        name: 'Test',
-        component: () => import('@/views/test'),
-        meta: {
-          title: '动态路由测试',
-          icon: 'test-tube-line',
-        },
-      },
-    ],
+    path: '/login',
+    name: 'login',
+    icon: 'UserOutlined',
+    hiden: true, // 不在菜单中显示
+    component: () => import('../views/login'),
   },
-  {
-    path: '/error',
-    name: 'Error',
-    component: Layout,
-    redirect: '/error/403',
-    meta: {
-      title: '错误页',
-      icon: 'error-warning-line',
-    },
-    children: [
-      {
-        path: '403',
-        name: 'Error403',
-        component: () => import('@/views/403'),
-        meta: {
-          title: '403',
-          icon: 'error-warning-line',
-        },
-      },
-      {
-        path: '404',
-        name: 'Error404',
-        component: () => import('@/views/404'),
-        meta: {
-          title: '404',
-          icon: 'error-warning-line',
-        },
-      },
-    ],
-  },
-  {
-    path: '/*',
-    redirect: '/404',
-    hidden: true,
-  },
-]
+];
+
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: constantRoutes,
-})
+  routes,
+});
 
-export default router
+export default router;

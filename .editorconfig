@@ -10,6 +10,12 @@ indent_size = 2
 #换行符的格式
 end_of_line = lf
 # 是否在文件的最后插入一个空行 可选true和false
-insert_final_newline = false
+insert_final_newline = true
 # 是否删除行尾的空格 可选择true和false
 trim_trailing_whitespace = true
+
+[*.md]
+# 是否在文件的最后插入一个空行 可选true和false
+insert_final_newline = false
+# 是否删除行尾的空格 可选择true和false
+trim_trailing_whitespace = false

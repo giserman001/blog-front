@@ -12,14 +12,11 @@ export default {
     } catch (error) {
       console.log(error)
     }
-
     return value;
   },
-
   remove(key) {
     window.localStorage.removeItem(key);
   },
-
   clear() {
     window.localStorage.clear();
   },

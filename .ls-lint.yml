@@ -1,0 +1,26 @@
+# https://ls-lint.org/1.x/configuration/the-basics.html#linting-directory-names
+# 一个极其快速的文件和目录名称linter-给你的项目目录带来一些结构
+# kebab-case: 短横线命名，camelCase: 驼峰式命名， PascalCase: 帕斯卡命名法 ---每一个单字的首字母都采用大写字母的命名格式，被称为“Pascal命名法”
+ls:
+  src/views/*:
+    .js: camelCase | PascalCase
+    .vue: camelCase | PascalCase | regex:^index
+    .css: kebab-case
+    .scss: kebab-case
+  # **: 匹配任何字符序列，包括路径分隔符  *: 匹配任何非路径分隔符序列
+  src/components:
+    .vue: PascalCase | regex:^index
+  # 如果逗号分隔的替代项之一匹配，则匹配一个字符序列
+  src/{utils,constants,store,router,plugins}/*:
+    .js: camelCase
+
+ignore:
+  - node_modules
+  - .git
+  - .circleci
+  - .github
+  - .vscode
+  - dist
+  - pre
+  - .local
+  - .history

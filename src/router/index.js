@@ -5,10 +5,11 @@ export const routes = [
     path: '/',
     name: '主菜单',
     icon: 'UserOutlined',
+    redirect: '/index',
     component: () => import('@/components/Layout'),
     children: [
       {
-        path: '/',
+        path: '/index',
         name: '主页',
         component: () => import('@/views/home/index'),
       },

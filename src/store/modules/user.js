@@ -1,6 +1,6 @@
 import * as Types from '../action-types';
 import * as Service from '../../service/user';
-import { requestParams } from '@/service/axios';
+import storage from '@/utils/storage';
 
 const state = {
   userInfo: {},
@@ -19,7 +19,7 @@ export default {
       let { data } = await Service.login(payload);
       commit(Types.LOGIN, data);
       if (data.token) {
-        requestParams.setToken(data.token);
+        storage.set(process.env.VUE_APP_STORAGE_TOKEN, data.token);
       }
     },
   },

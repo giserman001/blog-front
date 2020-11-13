@@ -3,7 +3,7 @@
  */
 export default {
   set(key, value) {
-    window.localStorage.setItem(key, JSON.stringify(value));
+    window && window.localStorage.setItem(key, JSON.stringify(value));
   },
   get(key) {
     let value = window.localStorage.getItem(key);
@@ -15,9 +15,9 @@ export default {
     return value;
   },
   remove(key) {
-    window.localStorage.removeItem(key);
+    window && window.localStorage.removeItem(key);
   },
   clear() {
-    window.localStorage.clear();
+    window && window.localStorage.clear();
   },
 };

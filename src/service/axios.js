@@ -1,15 +1,12 @@
 import axios from 'axios';
-// import { getVaildParams } from '@/utils/index';
 import { message } from 'ant-design-vue';
-import { Storage } from '../utils/index';
 import storage from '../utils/storage';
 import qs from 'qs';
 import router from '../router';
-
-axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
+console.log(process.env, 'process.env');
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API; // VUE_APP_STORAGE_TOKEN
 axios.defaults.timeout = 100000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-let tokenKeyName = 'token';
 
 axios.interceptors.request.use(
   config => {
@@ -20,8 +17,8 @@ axios.interceptors.request.use(
     ) {
       config.data = qs.stringify(config.data, { allowDots: true });
     }
-    if (storage.get(tokenKeyName)) {
-      config.headers.token = storage.get(tokenKeyName);
+    if (storage.get(process.env.VUE_APP_STORAGE_TOKEN)) {
+      config.headers['authorization'] = `Bearer ${storage.get(process.env.VUE_APP_STORAGE_TOKEN)}`;
     }
     return config;
   },
@@ -32,11 +29,11 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   function (res) {
-    if (res.code === 200) {
+    if (res.data.code === 200) {
       return res.data;
     } else {
       // 无token或者token失效
-      if (res.code === 20006) {
+      if (res.data.code === 20006) {
         router.push({
           path: '/login',
         });
@@ -52,58 +49,5 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-// const jsonType = {
-//   'Content-Type': 'application/json;charset=UTF-8',
-// };
-
-export const requestParams = {
-  _token: Storage.getLocalItem('TOKEN'),
-  setToken: function (token) {
-    Storage.setLocalItem('TOKEN', token);
-    this._token = token;
-  },
-  getToken: function () {
-    return this._token;
-  },
-};
-
-// /**
-//  * 测试
-//  * 正式
-//  */
-// // const devDomain = 'https://www.test.com';
-// const prodDomain = 'http://localhost:8080';
-
-// axios.defaults.baseURL = prodDomain;
-
-// axios.interceptors.request.use(request => {
-//   if (request.url === '/login') return request;
-//   // 未登录 => 到登录页面
-//   // if (requestParams.getToken()) {
-//   //   // 设置token
-//   //   request.headers['token'] = requestParams.getToken();
-//   // } else {
-//   //   window.location.hash = '/login';
-//   // }
-//   return request;
-// });
-
-// axios.interceptors.response.use(response => {
-//   let { data } = response;
-
-//   if (data && data.code === 0) {
-//     return data;
-//   } else {
-//     message.error(data.data || data.message);
-//   }
-// });
-
-// const oldPost = axios.post;
-// const oldGet = axios.get;
-
-// // 重写post和get方法
-// axios.post = (url, params = {}) => oldPost(url, getVaildParams(params), { jsonType });
-// axios.get = (url, resData = {}) => oldGet(url, { params: getVaildParams(resData) });
 
 export default axios;

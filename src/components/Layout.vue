@@ -31,7 +31,7 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style=" padding-left: 0; background: #fff;" class="flex-hcb">
+      <a-layout-header style="padding-left: 0; background: #fff" class="flex-hcb">
         <Icon
           type="menu-unfold-outlined"
           v-if="collapsed"
@@ -46,9 +46,9 @@
         />
 
         <a-dropdown :trigger="['click']">
-          <a-avatar style="backgroundcolor: #1890ff;" size="large">刘备</a-avatar>
+          <a-avatar style="backgroundcolor: #1890ff" size="large">刘备</a-avatar>
           <template v-slot:overlay>
-            <a-menu style="width: 120px;">
+            <a-menu style="width: 120px">
               <a-menu-item @click="onLogOut">
                 <Icon type="LogoutOutlined" />
                 退出登录

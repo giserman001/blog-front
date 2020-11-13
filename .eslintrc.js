@@ -5,7 +5,7 @@ module.exports = {
     node: true,
     es6: true
   },
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended'],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-essential', "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: 2020,
   },

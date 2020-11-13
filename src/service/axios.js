@@ -31,7 +31,7 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-  function(res) {
+  function (res) {
     if (res.code === 200) {
       return res.data;
     } else {
@@ -47,7 +47,7 @@ axios.interceptors.response.use(
       }
     }
   },
-  function(error) {
+  function (error) {
     message.error('网络错误');
     return Promise.reject(error);
   },
@@ -59,11 +59,11 @@ axios.interceptors.response.use(
 
 export const requestParams = {
   _token: Storage.getLocalItem('TOKEN'),
-  setToken: function(token) {
+  setToken: function (token) {
     Storage.setLocalItem('TOKEN', token);
     this._token = token;
   },
-  getToken: function() {
+  getToken: function () {
     return this._token;
   },
 };

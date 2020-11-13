@@ -31,7 +31,7 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff;padding-left:0" class="flex-hcb">
+      <a-layout-header style=" padding-left: 0; background: #fff;" class="flex-hcb">
         <Icon
           type="menu-unfold-outlined"
           v-if="collapsed"
@@ -46,9 +46,9 @@
         />
 
         <a-dropdown :trigger="['click']">
-          <a-avatar style="backgroundColor:#1890ff" size="large">刘备</a-avatar>
+          <a-avatar style="backgroundcolor: #1890ff;" size="large">刘备</a-avatar>
           <template v-slot:overlay>
-            <a-menu style="width:120px">
+            <a-menu style="width: 120px;">
               <a-menu-item @click="onLogOut">
                 <Icon type="LogoutOutlined" />
                 退出登录
@@ -114,26 +114,31 @@ export default {
 <style lang="scss" scoped>
 #app-layout {
   height: 100vh;
+
   .layout-content {
-    margin: 20px 15px;
+    min-height: 280px;
     padding: 24px;
     padding-top: 15px;
+    margin: 20px 15px;
     background: #fff;
-    min-height: 280px;
   }
+
   .trigger {
+    padding: 0 24px;
     font-size: 18px;
     line-height: 64px;
-    padding: 0 24px;
     cursor: pointer;
     transition: color 0.3s;
+
     &:hover {
       color: #1890ff;
     }
   }
+
   .logo {
-    text-align: center;
     margin: 10px;
+    text-align: center;
+
     img {
       width: 40px;
     }

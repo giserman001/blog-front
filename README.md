@@ -8,3 +8,5 @@ http://martsforever-snapshot.gitee.io/vue-docs-next-zh-cn/api/
 
 https://2x.antdv.com/docs/vue/introduce-cn/
 
+### 如果使用ESLint，请安装eslint-config- prettier，以使ESLint和Prettier相互配合。它关闭所有不必要的或可能与Prettier冲突的ESLint规则。Stylelint有一个类似的配置：stylelint-config-prettier
+

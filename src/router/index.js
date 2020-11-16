@@ -3,9 +3,9 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 export const routes = [
   {
     path: '/',
-    name: '主菜单',
+    name: '文章管理',
     icon: 'UserOutlined',
-    redirect: '/index',
+    redirect: '/login',
     component: () => import('@/components/Layout'),
     children: [
       {

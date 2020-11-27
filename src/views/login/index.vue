@@ -41,7 +41,7 @@ export default {
       await ruleFormRef.value.validate();
       const res = await store.dispatch(`user/${Types.LOGIN}`, data.form);
       console.log(res, 'res');
-      router.push('/index');
+      router.push('/list');
     }
     return {
       ...toRefs(data),

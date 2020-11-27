@@ -16,6 +16,13 @@
             <Icon :type="route.icon" />
             <span>{{ route.name }}</span>
           </a-menu-item>
+          <a-menu-item
+            v-else-if="route.children && route.children.length === 1"
+            :key="route.children[0].path"
+          >
+            <Icon :type="route.children[0].icon" />
+            <span>{{ route.children[0].name }}</span>
+          </a-menu-item>
           <a-sub-menu :key="route.path" v-else>
             <template v-slot:title>
               <span>

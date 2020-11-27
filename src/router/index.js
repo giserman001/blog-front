@@ -4,44 +4,39 @@ export const routes = [
   {
     path: '/',
     name: '文章管理',
-    icon: 'UserOutlined',
+    icon: 'MenuUnfoldOutlined',
     redirect: '/login',
     component: () => import('@/components/Layout'),
     children: [
       {
-        path: '/index',
-        name: '主页',
+        path: '/list',
+        name: '管理',
         component: () => import('@/views/home/index'),
       },
       {
-        path: '/list',
-        name: '表单',
-        component: () => import('@/views/home/list'),
+        path: '/create',
+        name: '创建',
+        component: () => import('@/views/home/create'),
       },
     ],
   },
   {
-    path: '/order',
-    name: '订单模块',
+    path: '/user',
+    name: '用户管理',
     icon: 'UserOutlined',
     component: () => import('@/components/Layout'),
     children: [
       {
-        path: '/order/mine',
-        name: '我的订单',
+        path: '/user/list',
+        name: '用户管理',
+        icon: 'UserOutlined',
         component: () => import('@/views/order/myOrder'),
-      },
-      {
-        path: '/order/list',
-        name: '表格',
-        component: () => import('@/views/order/orderList'),
       },
     ],
   },
   {
     path: '/login',
     name: 'login',
-    icon: 'UserOutlined',
     hiden: true, // 不在菜单中显示
     component: () => import('../views/login'),
   },

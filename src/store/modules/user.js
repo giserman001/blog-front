@@ -1,5 +1,5 @@
 import * as Types from '../action-types';
-import * as Service from '../../service/user';
+import * as Service from '../../service/index';
 import storage from '@/utils/storage';
 
 const state = {

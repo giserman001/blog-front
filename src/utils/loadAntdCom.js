@@ -18,6 +18,8 @@ import {
   Dropdown,
   Modal,
   Switch,
+  Tag,
+  Divider,
 } from 'ant-design-vue';
 
 import {
@@ -28,6 +30,8 @@ import {
   MenuFoldOutlined,
   LogoutOutlined,
   MailOutlined,
+  SmileOutlined,
+  DownOutlined,
 } from '@ant-design/icons-vue';
 import { Icon } from '../components/index';
 
@@ -53,6 +57,8 @@ export default function lazyLoadAntComponent(app) {
     Dropdown,
     Modal,
     Switch,
+    Tag,
+    Divider,
   ].forEach(com => app.use(com));
 
   // 加载自定义组件和图标
@@ -65,5 +71,7 @@ export default function lazyLoadAntComponent(app) {
     MenuFoldOutlined,
     LogoutOutlined,
     MailOutlined,
+    SmileOutlined,
+    DownOutlined,
   ].forEach(com => app.component(com.name, com));
 }

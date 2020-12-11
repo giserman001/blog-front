@@ -18,7 +18,6 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    console.log(route, router);
 
     const data = reactive({
       pathData: updatePathData(route.path),
@@ -39,7 +38,6 @@ export default {
           v.children.some(child => child.path === currentPath),
       );
       if (findRoute) {
-        console.log(findRoute);
         const { path, name, children } = findRoute;
         paths.push({ name, path });
         children.forEach(child => {

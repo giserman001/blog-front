@@ -44,16 +44,19 @@ input {
 
 .flex-hcb {
   @extend .flex-hc;
+
   justify-content: space-between;
 }
 
 .flex-vc {
   @extend .flex-hc;
+
   flex-direction: column;
 }
 
 .flex-center {
   @extend .flex-hc;
+
   justify-content: center;
 }
 
@@ -108,4 +111,7 @@ input {
 // 显示小手
 .cursor {
   cursor: pointer;
+}
+.mt10 {
+  margin-top: 10px;
 }

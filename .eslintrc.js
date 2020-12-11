@@ -8,6 +8,9 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:vue/vue3-essential', "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: 2020,
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

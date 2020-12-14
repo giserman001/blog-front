@@ -14,7 +14,7 @@
         </a-select>
       </a-form-item>
       <a-form-item label="分类">
-        <a-select v-model:value="formInline.classify" placeholder="请选择分类" class="selectWidth">
+        <a-select v-model:value="formInline.category" placeholder="请选择分类" class="selectWidth">
           <a-select-option value="">全部</a-select-option>
           <a-select-option value="shanghai">Zone one</a-select-option>
           <a-select-option value="beijing">Zone two</a-select-option>
@@ -77,14 +77,18 @@
 import { reactive, toRefs, onMounted } from 'vue';
 import { articleList } from '@/service/index';
 import dayjs from 'dayjs';
+import columns from './columns';
 export default {
   setup() {
     // 查询
+    // preview: Joi.number(),
+    // order: Joi.string().allow(''),
     const data = reactive({
       formInline: {
         keyword: '',
         tag: '',
-        classify: '',
+        category: '',
+        preview: 0,
       },
     });
     function handleSubmit() {
@@ -92,71 +96,42 @@ export default {
     }
     // 表格交互
     const table = reactive({
-      columns: [
-        {
-          dataIndex: 'title',
-          key: 'title',
-          title: '标题',
-        },
-        {
-          title: '标签',
-          dataIndex: 'tags',
-          slots: { customRender: 'tags' },
-        },
-        {
-          title: '分类',
-          dataIndex: 'categories',
-          slots: { customRender: 'categories' },
-        },
-        {
-          title: '浏览次数',
-          dataIndex: 'viewCount',
-          defaultSortOrder: 'descend',
-          sorter: (a, b) => a.viewCount - b.viewCount,
-        },
-        {
-          title: '发布时间',
-          key: 'createdAt',
-          dataIndex: 'createdAt',
-          defaultSortOrder: 'descend',
-          sorter: (a, b) => dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf(),
-        },
-        {
-          title: '修改时间',
-          key: 'updatedAt',
-          dataIndex: 'updatedAt',
-          defaultSortOrder: 'descend',
-          sorter: (a, b) => dayjs(a.updatedAt).valueOf() - dayjs(b.updatedAt).valueOf(),
-        },
-        {
-          title: '操作',
-          key: 'action',
-          width: 350,
-          slots: { customRender: 'action' },
-        },
-      ],
+      columns: columns(dayjs),
       data: [],
-      pagination: {},
+      pagination: {
+        current: 1,
+        pageSize: 10,
+        total: 0,
+      },
       loading: false,
     });
     onMounted(async () => {
+      const { current, pageSize } = table.pagination;
+      let params = { page: current, pageSize, ...data.formInline };
+      getList(params);
+    });
+    async function getList(query) {
       table.loading = true;
       const {
         code,
         data: { list, page },
-      } = await articleList();
+      } = await articleList(query);
       table.loading = false;
       if (code !== 200) return;
       const pagination = { ...table.pagination };
-      pagination.total = page.total;
-      pagination.current = page.currentPage;
-      pagination.pageSize = page.pageSize;
+      pagination.total = +page.total;
+      pagination.current = +page.currentPage;
+      pagination.pageSize = +page.pageSize;
       table.pagination = pagination;
       table.data = list;
-    });
+    }
 
     function handleTableChange(pagination, filters, sorter) {
       console.log(pagination, filters, sorter);
+      table.pagination.current = pagination.current;
+      const { current, pageSize } = table.pagination;
+      const query = { page: current, pageSize, ...data.formInline };
+      getList(query);
       // const pager = { ...this.pagination };
       // pager.current = pagination.current;
       // this.pagination = pager;

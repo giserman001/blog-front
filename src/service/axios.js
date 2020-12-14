@@ -10,6 +10,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 axios.interceptors.request.use(
   config => {
+    console.log(config, 'config');
     // 'x-www-form-urlencoded' 提交格式需要将json序列化
     if (
       config.method === 'post' &&

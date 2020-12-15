@@ -3,14 +3,12 @@ import { message } from 'ant-design-vue';
 import storage from '../utils/storage';
 import qs from 'qs';
 import router from '../router';
-console.log(process.env, 'process.env');
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API; // VUE_APP_STORAGE_TOKEN
 axios.defaults.timeout = 100000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
 axios.interceptors.request.use(
   config => {
-    console.log(config, 'config');
     // 'x-www-form-urlencoded' 提交格式需要将json序列化
     if (
       config.method === 'post' &&

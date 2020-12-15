@@ -9,15 +9,17 @@
       <a-form-item label="标签">
         <a-select v-model:value="formInline.tag" placeholder="请选择标签" class="selectWidth">
           <a-select-option value="">全部</a-select-option>
-          <a-select-option value="shanghai">Zone one</a-select-option>
-          <a-select-option value="beijing">Zone two</a-select-option>
+          <a-select-option v-for="item in tagArr" :value="item.name" :key="item.id">{{
+            item.name
+          }}</a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item label="分类">
         <a-select v-model:value="formInline.category" placeholder="请选择分类" class="selectWidth">
           <a-select-option value="">全部</a-select-option>
-          <a-select-option value="shanghai">Zone one</a-select-option>
-          <a-select-option value="beijing">Zone two</a-select-option>
+          <a-select-option v-for="item in CategoriesArr" :value="item.name" :key="item.id">{{
+            item.name
+          }}</a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item>
@@ -75,14 +77,25 @@
 
 <script>
 import { reactive, toRefs, onMounted } from 'vue';
-import { articleList } from '@/service/index';
+import { articleList, getTags, getCategories } from '@/service/index';
 import dayjs from 'dayjs';
 import columns from './columns';
 export default {
   setup() {
-    // 查询
-    // preview: Joi.number(),
-    // order: Joi.string().allow(''),
+    // 查询下拉框业务逻辑
+    const select = reactive({
+      tagArr: [],
+      CategoriesArr: [],
+    });
+    onMounted(() => {
+      getTags().then(res => {
+        select.tagArr = res.data;
+      });
+      getCategories().then(res => {
+        select.CategoriesArr = res.data;
+      });
+    });
+    // 查询逻辑
     const data = reactive({
       formInline: {
         keyword: '',
@@ -92,9 +105,11 @@ export default {
       },
     });
     function handleSubmit() {
-      console.log('提交');
+      const { current, pageSize, order } = table.pagination;
+      let params = { page: current, pageSize, order, ...data.formInline };
+      getList(params);
     }
-    // 表格交互
+    // 表格业务逻辑
     const table = reactive({
       columns: columns(dayjs),
       data: [],
@@ -102,12 +117,13 @@ export default {
         current: 1,
         pageSize: 10,
         total: 0,
+        order: 'createdAt DESC',
       },
       loading: false,
     });
     onMounted(async () => {
-      const { current, pageSize } = table.pagination;
-      let params = { page: current, pageSize, ...data.formInline };
+      const { current, pageSize, order } = table.pagination;
+      let params = { page: current, pageSize, order, ...data.formInline };
       getList(params);
     });
     async function getList(query) {
@@ -125,27 +141,17 @@ export default {
       table.pagination = pagination;
       table.data = list;
     }
-
     function handleTableChange(pagination, filters, sorter) {
-      console.log(pagination, filters, sorter);
       table.pagination.current = pagination.current;
       const { current, pageSize } = table.pagination;
-      const query = { page: current, pageSize, ...data.formInline };
+      const order = `${sorter.field} ${sorter.order === 'descend' ? 'DESC' : 'ASC'}`;
+      const query = { page: current, pageSize, order, ...data.formInline };
       getList(query);
-      // const pager = { ...this.pagination };
-      // pager.current = pagination.current;
-      // this.pagination = pager;
-      // this.fetch({
-      //   results: pagination.pageSize,
-      //   page: pagination.current,
-      //   sortField: sorter.field,
-      //   sortOrder: sorter.order,
-      //   ...filters,
-      // });
     }
     return {
       ...toRefs(data),
       ...toRefs(table),
+      ...toRefs(select),
       handleTableChange,
       handleSubmit,
     };

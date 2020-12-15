@@ -18,7 +18,6 @@ export default dayjs => {
     {
       title: '浏览次数',
       dataIndex: 'viewCount',
-      defaultSortOrder: 'descend',
       sorter: (a, b) => a.viewCount - b.viewCount,
     },
     {
@@ -32,7 +31,6 @@ export default dayjs => {
       title: '修改时间',
       key: 'updatedAt',
       dataIndex: 'updatedAt',
-      defaultSortOrder: 'descend',
       sorter: (a, b) => dayjs(a.updatedAt).valueOf() - dayjs(b.updatedAt).valueOf(),
     },
     {

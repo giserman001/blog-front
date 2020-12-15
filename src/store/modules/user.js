@@ -22,5 +22,9 @@ export default {
         storage.set(process.env.VUE_APP_STORAGE_TOKEN, data.token);
       }
     },
+    async [Types.USERINFO]({ commit }) {
+      let { data } = await Service.userinfo();
+      commit(Types.LOGIN, data);
+    },
   },
 };

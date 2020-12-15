@@ -37,20 +37,4 @@ export const Storage = {
     }
     return null;
   },
-
-  setLocalItem: (key, val) => {
-    localStorage.setItem(key, JSON.stringify(val));
-  },
-  getLocalItem: key => {
-    let value = localStorage.getItem(key);
-    if (value !== 'undefined') {
-      try {
-        value = JSON.parse(value);
-      } catch (error) {
-        console.log(error);
-      }
-      return value;
-    }
-    return null;
-  },
 };
